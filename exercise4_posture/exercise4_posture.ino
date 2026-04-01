@@ -6,14 +6,16 @@ Madgwick filter;
 unsigned long microsPerReading, microsPrevious;
 
 // Thresholds
-#define POSTURE_THRESHOLD 80.0   // pitch below this = bad posture
-#define TEMP_HIGH_THRESHOLD 28.0 // °C above this = too warm
+#define POSTURE_THRESHOLD_LOW 80.0
+#define POSTURE_THRESHOLD_HIGH 100.0
+
+#define TEMP_HIGH_THRESHOLD 28.0 
 
 void setup() {
   Serial.begin(9600);
   while (!Serial);
 
-  // RGB LED pins (active LOW on Nano RP2040)
+  // RGB LED pins
   pinMode(LEDR, OUTPUT);
   pinMode(LEDG, OUTPUT);
   pinMode(LEDB, OUTPUT);
@@ -24,7 +26,7 @@ void setup() {
     while (1);
   }
 
-  filter.begin(104);
+  filter.begin(104); //NANO HZ
   microsPerReading = 1000000 / 25; // 25 Hz
   microsPrevious = micros();
 }
@@ -52,10 +54,11 @@ void loop() {
 
     // Update Madgwick filter
     filter.updateIMU(gx, gy, gz, ax, ay, az);
-    float pitch = filter.getPitch();
+    //To degrees
+    float pitch = atan2(ay, az) * RAD_TO_DEG;
 
     // Evaluate posture and temperature
-    bool badPosture = (pitch < POSTURE_THRESHOLD);
+    bool badPosture = (pitch < POSTURE_THRESHOLD_LOW || pitch > POSTURE_THRESHOLD_HIGH);
     bool highTemp   = (temp > TEMP_HIGH_THRESHOLD);
 
     // Serial output
@@ -82,14 +85,12 @@ void loop() {
     } else {
       setRGB(false, true, false); // green
     }
-
     microsPrevious += microsPerReading;
   }
 }
 
-// RGB is active LOW on Nano RP2040 Connect
 void setRGB(bool r, bool g, bool b) {
-  digitalWrite(LEDR, r ? LOW : HIGH);
-  digitalWrite(LEDG, g ? LOW : HIGH);
-  digitalWrite(LEDB, b ? LOW : HIGH);
+  digitalWrite(LEDR, r ? HIGH : LOW);
+  digitalWrite(LEDG, g ? HIGH : LOW);
+  digitalWrite(LEDB, b ? HIGH : LOW);
 }
