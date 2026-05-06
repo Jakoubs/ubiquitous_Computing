@@ -2,8 +2,8 @@
 #include <Arduino_LSM6DSOX.h>
 #include <WiFiNINA.h> 
 
-char ssid[] = "test";
-char pw[] = "ardo123ardo333";
+char ssid[] = "iPhone von Jana";
+char pw[] = "7258532989";
 int status = WL_IDLE_STATUS;
 
 int mediumBorder = 20; 

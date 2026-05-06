@@ -1,0 +1,295 @@
+[
+    {
+        "id": "9ca41c7e85e25282",
+        "type": "tab",
+        "label": "Flow 5",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2e68b87a83071d70",
+        "type": "ui-switch",
+        "z": "9ca41c7e85e25282",
+        "name": "",
+        "label": "LED",
+        "group": "c4e9957d20acf6e2",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": false,
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "className": "",
+        "layout": "row-spread",
+        "clickableArea": "switch",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 210,
+        "y": 200,
+        "wires": [
+            [
+                "d3273e6e5a69ebf3"
+            ]
+        ]
+    },
+    {
+        "id": "d3273e6e5a69ebf3",
+        "type": "serial out",
+        "z": "9ca41c7e85e25282",
+        "name": "",
+        "serial": "f0c6eb533ec4a8f4",
+        "x": 430,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "559728353a421a24",
+        "type": "inject",
+        "z": "9ca41c7e85e25282",
+        "name": "1",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "1",
+        "x": 210,
+        "y": 300,
+        "wires": [
+            [
+                "d3273e6e5a69ebf3",
+                "152e0643822fd71c"
+            ]
+        ]
+    },
+    {
+        "id": "a8940d4b7fc30ed6",
+        "type": "inject",
+        "z": "9ca41c7e85e25282",
+        "name": "0",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "0",
+        "x": 210,
+        "y": 380,
+        "wires": [
+            [
+                "d3273e6e5a69ebf3",
+                "152e0643822fd71c"
+            ]
+        ]
+    },
+    {
+        "id": "152e0643822fd71c",
+        "type": "debug",
+        "z": "9ca41c7e85e25282",
+        "name": "SEND",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "cd4ff178b7bd3b11",
+        "type": "serial in",
+        "z": "9ca41c7e85e25282",
+        "name": "",
+        "serial": "f0c6eb533ec4a8f4",
+        "x": 210,
+        "y": 520,
+        "wires": [
+            [
+                "03c1ede52517bf74",
+                "23d93dcc2ef38c51"
+            ]
+        ]
+    },
+    {
+        "id": "03c1ede52517bf74",
+        "type": "debug",
+        "z": "9ca41c7e85e25282",
+        "name": "IN",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "23d93dcc2ef38c51",
+        "type": "ui-template",
+        "z": "9ca41c7e85e25282",
+        "group": "",
+        "page": "a39a4a77958b3b22",
+        "ui": "",
+        "name": "LED",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<template>\n  <div :style=\"{\n    width: '30px',\n    height: '30px',\n    borderRadius: '50%',\n    backgroundColor: payload == '1' ? 'green' : 'red',\n    boxShadow: '0 0 10px ' + (payload == '1' ? 'green' : 'red')\n  }\">\n  </div>\n</template>\n\n<script>\n  export default {\n    data() {\n      return {\n        payload: '0'\n      }\n    },\n    watch: {\n      msg: function(newMsg) {\n        if (newMsg) {\n          this.payload = String(newMsg.payload)\n        }\n      }\n    }\n  }\n</script>",
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "page:style",
+        "className": "",
+        "x": 450,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c4e9957d20acf6e2",
+        "type": "ui-group",
+        "name": "Ex_1",
+        "page": "a39a4a77958b3b22",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "f0c6eb533ec4a8f4",
+        "type": "serial-port",
+        "name": "",
+        "serialport": "COM3",
+        "serialbaud": "9600",
+        "databits": 8,
+        "parity": "none",
+        "stopbits": 1,
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": 10000
+    },
+    {
+        "id": "a39a4a77958b3b22",
+        "type": "ui-page",
+        "name": "Lab3",
+        "ui": "1db0a12afbcc9be8",
+        "path": "/page3",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "6582e9171088a3e7",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 3,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "1db0a12afbcc9be8",
+        "type": "ui-base",
+        "name": "Mein Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "6582e9171088a3e7",
+        "type": "ui-theme",
+        "name": "Standardthema",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "dfced44e9e013707",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@flowfuse/node-red-dashboard": "1.30.2",
+            "node-red-node-serialport": "2.0.3"
+        }
+    }
+]
