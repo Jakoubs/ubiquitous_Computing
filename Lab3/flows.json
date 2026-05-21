@@ -170,7 +170,7 @@
         "certname": "",
         "keyname": "",
         "caname": "",
-        "servername": "d04d159e4fae4bb9b86b9ad79c284da6",
+        "servername": "76ed94dcc82f41bb9fa428d3772d296e",
         "verifyservercert": true,
         "alpnprotocol": ""
     },
@@ -184,7 +184,7 @@
         "clientid": "",
         "autoConnect": true,
         "usetls": true,
-        "protocolVersion": 4,
+        "protocolVersion": "3",
         "keepalive": 60,
         "cleansession": true,
         "autoUnsubscribe": true,
@@ -210,7 +210,7 @@
         "id": "3d1340421bf3966a",
         "type": "serial-port",
         "name": "",
-        "serialport": "/dev/cu.usbmodem11201",
+        "serialport": "/dev/cu.usbmodem11401",
         "serialbaud": "9600",
         "databits": 8,
         "parity": "none",
@@ -397,6 +397,20 @@
         "verboselogging": false
     },
     {
+        "id": "6dbbd06b4ef5d74d",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "d04d159e4fae4bb9b86b9ad79c284da6",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
         "id": "2e68b87a83071d70",
         "type": "ui-switch",
         "z": "9ca41c7e85e25282",
@@ -415,18 +429,18 @@
         "layout": "row-spread",
         "clickableArea": "switch",
         "onvalue": "1",
-        "onvalueType": "num",
+        "onvalueType": "str",
         "onicon": "",
         "oncolor": "",
         "offvalue": "0",
-        "offvalueType": "num",
+        "offvalueType": "str",
         "officon": "",
         "offcolor": "",
         "x": 210,
         "y": 200,
         "wires": [
             [
-                "d3273e6e5a69ebf3"
+                "d68bd5b8855a3b49"
             ]
         ]
     },
@@ -436,8 +450,8 @@
         "z": "9ca41c7e85e25282",
         "name": "",
         "serial": "3d1340421bf3966a",
-        "x": 490,
-        "y": 200,
+        "x": 690,
+        "y": 180,
         "wires": []
     },
     {
@@ -456,7 +470,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "payload": "1",
-        "payloadType": "num",
+        "payloadType": "str",
         "x": 210,
         "y": 300,
         "wires": [
@@ -482,7 +496,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "payload": "0",
-        "payloadType": "num",
+        "payloadType": "str",
         "x": 210,
         "y": 380,
         "wires": [
@@ -506,7 +520,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 430,
-        "y": 340,
+        "y": 360,
         "wires": []
     },
     {
@@ -519,7 +533,8 @@
         "y": 520,
         "wires": [
             [
-                "5a3696669564f4c6"
+                "5a3696669564f4c6",
+                "7dba7654877197f3"
             ]
         ]
     },
@@ -544,8 +559,8 @@
         "id": "bc40a47fcc816972",
         "type": "ui-switch",
         "z": "9ca41c7e85e25282",
-        "name": "",
-        "label": "switch",
+        "name": "Switch",
+        "label": "Button",
         "group": "c4e9957d20acf6e2",
         "order": 1,
         "width": 0,
@@ -559,18 +574,18 @@
         "layout": "row-spread",
         "clickableArea": "switch",
         "onvalue": "1",
-        "onvalueType": "num",
+        "onvalueType": "str",
         "onicon": "",
         "oncolor": "",
         "offvalue": "0",
-        "offvalueType": "num",
+        "offvalueType": "str",
         "officon": "",
         "offcolor": "",
-        "x": 650,
-        "y": 540,
+        "x": 750,
+        "y": 520,
         "wires": [
             [
-                "d3273e6e5a69ebf3"
+                "d68bd5b8855a3b49"
             ]
         ]
     },
@@ -579,7 +594,7 @@
         "type": "function",
         "z": "9ca41c7e85e25282",
         "name": "function 1",
-        "func": "let data = String(msg.payload).trim();\n\n// Wenn die Nachricht exakt \"1\" oder \"0\" ist, kommt sie vom Button\nif (data === \"1\" || data === \"0\") {\n    msg.payload = parseInt(data);\n    return msg;\n}\n\n// Wenn \"T:\" drin vorkommt, ist es Temperatur -> ignorieren\nreturn null;",
+        "func": "let data = String(msg.payload).trim();\n\nif (data === \"1\" || data === \"0\") {\n    msg.payload = data;\n    return msg;\n}\n\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -592,6 +607,43 @@
             [
                 "bc40a47fcc816972",
                 "03c1ede52517bf74"
+            ]
+        ]
+    },
+    {
+        "id": "7dba7654877197f3",
+        "type": "debug",
+        "z": "9ca41c7e85e25282",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "d68bd5b8855a3b49",
+        "type": "function",
+        "z": "9ca41c7e85e25282",
+        "name": "function 5",
+        "func": "let data = String(msg.payload).trim();\nmsg.payload = data + \"\\n\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 100,
+        "wires": [
+            [
+                "d3273e6e5a69ebf3"
             ]
         ]
     },
@@ -747,7 +799,7 @@
         "type": "function",
         "z": "96e46098972ccbaf",
         "name": "function 2",
-        "func": "let data = String(msg.payload).trim();\n\n// Prüfen, ob die Nachricht vom Temperatur-Sensor kommt (startet mit T:)\nif (data.startsWith(\"T:\")) {\n    // Schneidet \"T:\" ab und wandelt den Rest in eine Zahl um\n    msg.payload = parseFloat(data.substring(2));\n\n    // WICHTIG: Ein festes Topic vergeben, damit die Chart nur EINE Linie zeichnet\n    msg.topic = \"Temperatur\";\n\n    return msg;\n}\n\n// Falls es Button-Daten sind, ignorieren wir sie hier für die Anzeige\nreturn null;",
+        "func": "let data = String(msg.payload).trim();\n\n\nif (data.startsWith(\"T:\")) {\n\n    msg.payload = parseFloat(data.substring(2));\n\n    msg.topic = \"Temperatur\";\n\n    return msg;\n}\n\n\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -781,8 +833,7 @@
         "y": 180,
         "wires": [
             [
-                "ce17def018e4993d",
-                "06cf1eaf8aaa29ec"
+                "7dbd54c86d91d8e0"
             ]
         ]
     },
@@ -799,8 +850,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 460,
-        "y": 180,
+        "x": 600,
+        "y": 100,
         "wires": []
     },
     {
@@ -883,158 +934,39 @@
         "styleRounded": true,
         "styleGlow": false,
         "className": "",
-        "x": 470,
-        "y": 220,
+        "x": 610,
+        "y": 160,
         "wires": [
             []
         ]
     },
     {
-        "id": "5690fc2931aaed31",
-        "type": "ui-chart",
-        "z": "803e8be10ba18530",
-        "group": "c4e9957d20acf6e2",
-        "name": "",
-        "label": "Temperature",
-        "order": 6,
-        "chartType": "line",
-        "category": "topic",
-        "categoryType": "msg",
-        "xAxisLabel": "",
-        "xAxisProperty": "",
-        "xAxisPropertyType": "timestamp",
-        "xAxisType": "time",
-        "xAxisFormat": "",
-        "xAxisFormatType": "auto",
-        "xmin": "",
-        "xmax": "",
-        "yAxisLabel": "",
-        "yAxisProperty": "payload",
-        "yAxisPropertyType": "msg",
-        "ymin": "0",
-        "ymax": "50",
-        "bins": 10,
-        "action": "append",
-        "stackSeries": false,
-        "pointShape": "circle",
-        "pointRadius": 4,
-        "showLegend": true,
-        "removeOlder": 1,
-        "removeOlderUnit": "3600",
-        "removeOlderPoints": "",
-        "colors": [
-            "#0095ff",
-            "#ff0000",
-            "#ff7f0e",
-            "#2ca02c",
-            "#a347e1",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "textColor": [
-            "#666666"
-        ],
-        "textColorDefault": true,
-        "gridColor": [
-            "#e5e5e5"
-        ],
-        "gridColorDefault": true,
-        "width": 6,
-        "height": 8,
-        "className": "",
-        "interpolation": "linear",
-        "x": 430,
-        "y": 240,
+        "id": "7dbd54c86d91d8e0",
+        "type": "function",
+        "z": "08fcb9107c7fd463",
+        "name": "function 6",
+        "func": "let data = String(msg.payload).trim();\n\nif (data === \"1\" || data === \"0\") {\n    return null; // Button-Werte ignorieren\n}\n\nmsg.payload = parseFloat(data);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 120,
         "wires": [
-            []
+            [
+                "ce17def018e4993d",
+                "06cf1eaf8aaa29ec"
+            ]
         ]
-    },
-    {
-        "id": "bb90a60af8cbdf04",
-        "type": "ui-gauge",
-        "z": "803e8be10ba18530",
-        "name": "Aktuelle Temperature",
-        "group": "c4e9957d20acf6e2",
-        "order": 7,
-        "value": "payload",
-        "valueType": "msg",
-        "width": 3,
-        "height": 3,
-        "gtype": "gauge-half",
-        "gstyle": "needle",
-        "title": "gauge",
-        "alwaysShowTitle": false,
-        "floatingTitlePosition": "top-left",
-        "units": "units",
-        "icon": "",
-        "prefix": "",
-        "suffix": "",
-        "segments": [
-            {
-                "from": "0",
-                "color": "#5cd65c",
-                "text": "",
-                "textType": "label"
-            },
-            {
-                "from": "4",
-                "color": "#ffc800",
-                "text": "",
-                "textType": "label"
-            },
-            {
-                "from": "7",
-                "color": "#ea5353",
-                "text": "",
-                "textType": "label"
-            }
-        ],
-        "min": 0,
-        "max": "50",
-        "sizeThickness": 16,
-        "sizeGap": 4,
-        "sizeKeyThickness": 8,
-        "styleRounded": true,
-        "styleGlow": false,
-        "className": "",
-        "x": 460,
-        "y": 300,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "096db8b084ce2f1f",
-        "type": "ui-text",
-        "z": "803e8be10ba18530",
-        "group": "c4e9957d20acf6e2",
-        "order": 8,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "Aktuelle Temperature: ",
-        "format": "{{msg.payload}}",
-        "layout": "row-center",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#717171",
-        "wrapText": false,
-        "className": "",
-        "value": "payload",
-        "valueType": "msg",
-        "x": 460,
-        "y": 360,
-        "wires": []
     },
     {
         "id": "699646697ea902ab",
         "type": "mqtt in",
         "z": "803e8be10ba18530",
         "name": "",
-        "topic": "mqqt",
+        "topic": "mqtt",
         "qos": "2",
         "datatype": "auto-detect",
         "broker": "0c905c1838b0ad2d",
@@ -1046,7 +978,7 @@
         "y": 240,
         "wires": [
             [
-                "869cb52f3aefdcc5"
+                "9055c08012fb1229"
             ]
         ]
     },
@@ -1054,13 +986,14 @@
         "id": "275053d6ddaeb47a",
         "type": "telegram sender",
         "z": "803e8be10ba18530",
-        "name": "",
+        "name": "Temperature",
         "bot": "8d2f521cd2bac32b",
-        "haserroroutput": false,
-        "outputs": 1,
-        "x": 440,
-        "y": 440,
+        "haserroroutput": true,
+        "outputs": 2,
+        "x": 470,
+        "y": 240,
         "wires": [
+            [],
             []
         ]
     },
@@ -1069,15 +1002,15 @@
         "type": "function",
         "z": "803e8be10ba18530",
         "name": "function 4",
-        "func": "var temp = msg.payload;\n\nif (temp > 28) {\n    msg.payload = {\n        chatId: //\"8953800748\",  // deine Chat-ID\n        type: \"message\",\n        content: \"⚠️ Temperatur zu hoch: \" + temp.toFixed(1) + \"°C\"\n    };\n    return msg;\n}\nreturn null;",
+        "func": "let data = String(msg.payload).trim();\nif (data.startsWith(\"T:\")) {\n    data = data.substring(2);\n}\nlet temp = parseFloat(data);\n\nif (isNaN(temp)) return null;\n\nlet lastSent = context.get('lastSent') || 0;\nlet now = Date.now();\nlet cooldown = 5 * 60 * 1000; // 5 Minuten in Millisekunden\n\nif (temp > 28) {\n    if (now - lastSent > cooldown) {\n        context.set('lastSent', now); // Zeit aktualisieren\n\n        msg.payload = {\n            chatId: //\"8953800748\",\n            type: \"message\",\n            content: \"⚠️ Temperatur zu hoch: \" + temp.toFixed(1) + \"°C\"\n        };\n        return msg;\n    }\n}\n\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 3,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 120,
-        "y": 380,
+        "x": 280,
+        "y": 240,
         "wires": [
             [
                 "275053d6ddaeb47a"
@@ -1085,30 +1018,7 @@
         ]
     },
     {
-        "id": "869cb52f3aefdcc5",
-        "type": "function",
-        "z": "803e8be10ba18530",
-        "name": "function 3",
-        "func": "msg.payload = parseFloat(msg.payload);\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 220,
-        "y": 280,
-        "wires": [
-            [
-                "5690fc2931aaed31",
-                "bb90a60af8cbdf04",
-                "096db8b084ce2f1f",
-                "9055c08012fb1229"
-            ]
-        ]
-    },
-    {
-        "id": "7c5e05bdcdca5087",
+        "id": "8fd09a0cc1acac7f",
         "type": "global-config",
         "env": [],
         "modules": {
